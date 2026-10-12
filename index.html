@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0e14">
+  <meta name="description" content="答案之书：每次打开，遇见一句新的答案。">
+  <title>答案之书 · The Book of Answers</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #0b0e14;
+      --ink: #eeeae4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      overscroll-behavior: none;
+    }
+
+    body {
+      color: var(--ink);
+      background: var(--night);
+      background-image: radial-gradient(
+        ellipse at 50% 45%,
+        #17202e 0%,
+        #10151e 42%,
+        var(--night) 78%
+      );
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC",
+        "Source Han Serif SC", "SimSun", serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      padding: calc(24px + env(safe-area-inset-top, 0px))
+        calc(clamp(24px, 6vw, 80px) + env(safe-area-inset-right, 0px))
+        calc(24px + env(safe-area-inset-bottom, 0px))
+        calc(clamp(24px, 6vw, 80px) + env(safe-area-inset-left, 0px));
+      text-align: center;
+    }
+
+    #answer {
+      width: 100%;
+      max-width: 18em;
+      margin: 0;
+      font-size: clamp(1.75rem, 5.4vw, 4.5rem);
+      font-weight: 400;
+      line-height: 1.8;
+      letter-spacing: 0.14em;
+      overflow-wrap: anywhere;
+      line-break: strict;
+      text-wrap: balance;
+      animation: emerge 1.8s ease-out both;
+    }
+
+    @keyframes emerge {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-height: 420px) {
+      #answer {
+        font-size: clamp(1.5rem, 6vh, 2.625rem);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #answer {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main aria-label="答案之书">
+    <p id="answer">让心安静，答案自会浮现。</p>
+  </main>
+
+  <script>
+    "use strict";
+
+    const answers = [
+      // 明确肯定：25 条
+      "这件事值得一试",
+      "你的选择是对的",
+      "此刻可以前进",
+      "这条路走得通",
+      "你能够做到",
+      "可以开始了",
+      "请接受这份邀请",
+      "尽管迈出这一步",
+      "可以把它当真",
+      "这次可以答应",
+      "大胆给出答案",
+      "你的判断没有错",
+      "你已准备好了",
+      "愿望有机会实现",
+      "继续向前就好",
+      "这份期待有着落",
+      "你会得到回应",
+      "你的努力会被看见",
+      "这一次会有进展",
+      "机会值得把握",
+      "这正是合适的方向",
+      "安心做出选择",
+      "可以相信这个念头",
+      "你的坚持会有回响",
+      "现在可以翻开新篇",
+
+      // 明确否定：25 条
+      "这次不要继续",
+      "别沿这个方向走",
+      "答案是否定的",
+      "此刻不宜行动",
+      "这并不适合你",
+      "别为此勉强自己",
+      "不要重复这次尝试",
+      "这不是你的归处",
+      "不必再把故事续写",
+      "不要轻易答应",
+      "这里没有你要的",
+      "别把希望押在这里",
+      "这次不要冒进",
+      "不必再追问",
+      "别抓住已经走远的",
+      "别再回到旧的困局",
+      "此路无需坚持",
+      "不要为此停留",
+      "请拒绝这份邀约",
+      "别再消耗自己",
+      "不值得继续等待",
+      "这不是正确的时机",
+      "这个选择并不稳妥",
+      "别把巧合当作承诺",
+      "这个念头暂不可行",
+
+      // 中性／延迟：25 条
+      "让时间补上答案",
+      "等风向变得清晰",
+      "答案还在路上",
+      "先听完再决定",
+      "把决定留到明天",
+      "多看一眼细节",
+      "此刻无需定论",
+      "换个角度再看",
+      "留一点空白",
+      "先把问题说清楚",
+      "等一个更好的信号",
+      "暂且保留选择",
+      "事情仍有变数",
+      "听听另一种声音",
+      "再走近一点观察",
+      "别急着给它命名",
+      "让念头静一静",
+      "答案需要一点耐心",
+      "先确认你真正想要的",
+      "停一会儿再出发",
+      "把这个问题放一放",
+      "等心绪落定",
+      "下一步会带来线索",
+      "先留在原地片刻",
+      "给事情一点余地",
+
+      // 哲理／开放：25 条
+      "微小的光也能引路",
+      "绕路也有风景",
+      "改变从松手开始",
+      "沉默也会回答",
+      "你寻找的就在心里",
+      "失去会腾出空间",
+      "走慢些也能抵达",
+      "柔软并不意味着脆弱",
+      "每个终点都有回声",
+      "真正的力量藏在平静里",
+      "心安之处自有方向",
+      "有些答案无需说出口",
+      "世界比想象更宽",
+      "留白也是一种完整",
+      "花有自己的时辰",
+      "向内走才能看清",
+      "未完成也有它的美",
+      "每次转身都藏着可能",
+      "远方始于脚下",
+      "并非所有相遇都要留下",
+      "平凡之中藏着转机",
+      "允许故事慢慢展开",
+      "心里的秤最懂分量",
+      "夜色不会遮住全部星光",
+      "新的可能生于转弯处"
+    ];
+
+    // 每次加载独立随机抽取；相邻两次可能得到同一句答案。
+    const index = Math.floor(Math.random() * answers.length);
+    document.getElementById("answer").textContent = answers[index];
+  </script>
+</body>
+</html>
